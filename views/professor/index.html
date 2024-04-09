@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<!-- file: views/professor/index.html -->
+<html>
+<head>
+{{> header}}
+</head>
+<body>
+ <div class="container">
+  {{> navbar}}
+  <div class="row">
+   <div>
+     <h2>{{title}}</h2>
+     <table><thead>
+      <tr><th>Name</th><th>Degree</th><th>Email</th>
+          <th>Phone</th><th>Actions</th></th></tr>
+      </thead><tbody>
+      {{#professors}}
+      <tr><td>{{name}}</td>
+      <td>{{degree}}</td>
+      <td>{{email}}</td>
+      <td>{{phone}}</td>
+      <td>
+      <a class="button" href="professor/{{id}}">Show</a>
+	  {{#login}}
+      <a class="button" href="professor/{{id}}/edit">Edit</a>
+      <a class="button" href="professor/{{id}}/delete">Erase</a>
+	  {{/login}}
+      </td>
+      </tr>
+      {{/professors}}</tbody>
+     </table>
+	 {{#login}}
+     <a class="button" href="/professor/create">New</a>
+	 {{/login}}
+    </div>
+   </div>
+ </div>
+</body>

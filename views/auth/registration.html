@@ -1,0 +1,33 @@
+<!DOCTYPE html>  
+<!-- file: views/auth/registration.html -->
+<html>  
+<head>
+{{> header}}
+</head>  
+<body>  
+  <div class="container">
+	{{> navbar}}
+    <form action="/register" method="POST">
+    <h4>Registration Page</h4>
+    <div class="row"> 
+      <div class="six columns">  
+        <label for="name">Full name</label>  
+        <input class="u-full-width" type="text" name="name">  
+      </div>
+    </div>
+    <div class="row"> 
+      <div class="six columns">  
+        <label for="email">Email</label>  
+        <input class="u-full-width" type="text" name="email">  
+      </div>
+    </div>
+    <div class="row"> 
+      <div class="six columns">  
+        <label for="password">Password</label>  
+        <input class="u-full-width" type="password" name="password">  
+      </div>
+    </div>
+     <input class="button" type="submit" value="Submit">
+    </form>
+  </div>
+</body>

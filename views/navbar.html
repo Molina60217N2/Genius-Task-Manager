@@ -1,0 +1,17 @@
+<!-- file: views/navbar.html -->  
+<div class="row"  style="margin-top: 20px;margin-bottom: 20px">
+    <div class="twelve columns">
+    <a class="button button-primary" href="/">Home</a>  
+    <a class="button button-primary" href="/professor">Professors</a>  
+    <a class="button button-primary" href="/course">Courses</a>  
+    <a class="button button-primary" href="/student">Students</a>  
+    {{#login}}
+    <a class="button" style="float: right" 
+       href="/logout" login >Logout</a>
+    {{/login}}
+    {{^login}}
+    <a class="button" style="float: right" 
+       href="/login" login >Login</a>
+    {{~login}}
+    </div>
+   </div>

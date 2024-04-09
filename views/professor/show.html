@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<!-- file: views/professor/show.html -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>{{title}}</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="/css/normalize.css">
+<link rel="stylesheet" href="/css/skeleton.css">
+</head>
+<body>
+ <div class="container">
+   {{#show}}
+   <h1>El show es true jeje</h1>
+   {{/show}}
+   {{#create}}
+   <h1>El create es true</h1>
+   {{/create}}
+   {{#edit}}
+   <h1>El edit es true</h1>
+   {{/edit}}
+  <div class="row">
+   <div class="eleven column" style="margin-top: 10%">
+    <h2>{{title}}</h2>
+    {{#show}}<form>{{/show}}
+      {{#create}}<form action="/professor" method="POST">{{/create}}
+      {{#edit}}<form action="/professor/{{id}}" method="POST">
+        <input type="hidden" name="_method" value="PUT">{{/edit}}
+     {{#professor}}
+     <div class="row">
+      <div class="six columns">
+       <label for="nameInput">Name</label>
+       <input class="u-full-width" type="text"
+       {{#show}} readonly {{/show}} name="name" value="{{name}}" >
+      </div>
+      <div class="six columns">
+       <label for="degreeInput">Degree</label>
+       <input class="u-full-width" type="text"
+       {{#show}} readonly {{/show}}
+          name="degree" value="{{degree}}">
+      </div>
+     </div>
+     <div class="row">
+      <div class="six columns">
+       <label for="emailInput">Email</label>
+       <input class="u-full-width" type="email"
+       {{#show}} readonly {{/show}}
+          name="email" value="{{email}}">
+      </div>
+      <div class="six columns">
+       <label for="phoneInput">Phone</label>
+       <input class="u-full-width" type="tel"
+       {{#show}} readonly {{/show}}
+         name="phone" value="{{phone}}">
+      </div>
+      <a class="button button-primary" href="/professor">Back</a>
+     </div>
+     {{#edit}}<input class="button-primary" type="submit" value="Update">{{/edit}}
+     {{#create}}<input class="button-primary" type="submit" value="Create">{{/create}}
+     {{/professor}}
+    </form>
+   </div>
+  </div>
+ </div>
+</body>

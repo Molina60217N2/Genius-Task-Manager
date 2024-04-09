@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{{title}}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="../../css/global.css" />
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body>
+  <header class="py-8 px-4 mx-auto max-w-xl lg:py-16 lg:px-6">
+    <div class="mx-auto text-center mb-8 lg:mb-16">
+      <h2 class="mb-4 text-5xl tracking-light font-extrabold text-white">
+        {{title}}
+      </h2>
+    </div>
+    <nav class="flex flex-col items-center justify-between w-full text-center md:flex-row">
+      <a class="text-white font-bold" href="/">
+        Libros
+      </a>
+      <a class="text-white font-bold" href="/author">
+        Autores
+      </a>
+      <a class="text-white font-bold" href="/publisher">
+        Editoriales
+      </a>
+    </nav>
+  </header>
+  <div class="grid grid-cols-1 gap-10 w-3/4 mx-auto md:grid-cols-2 lg:grid-cols-3">
+    {{#authors}}
+    <a href="/author/{{id}}"
+      class="rounded-lg border shadow-md bg-gray-800 border-gray-700 hover:scale-105 hover:bg-gray-700 hover:border-gray-500 transition flex flex-col">
+      <header class="p-4 flex-grow">
+        <h2 class="my-2 text-2xl font-bold tracking-tight Itext-white">
+          {{author}}
+        </h2>
+        <p class="mb-4 font-light text-gray-400">{{nationality}}</p>
+        <span class="text-xs font-semibold mr-2 px-2.5 py-0.5 rounded bg-green-200 text-green-900">{{birth_year}}</span>
+      </header>
+    {{/authors}}
+    </a>    
+  </div>
+  <div class="w-1/2 flex m-auto items-center justify-center mt-10">
+    <a href="/author/create" class="inline-flex items-center px-4 py-2 bg-green-600 hover:bg-green-700 text-white text-2xl font-medium rounded-md mx-auto">Crear Registro</a>
+  </div>
+</body>
+
+</html>

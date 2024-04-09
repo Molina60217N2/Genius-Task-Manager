@@ -1,0 +1,37 @@
+<!DOCTYPE html>  
+<!-- file: views/auth/login.html -->  
+<html>  
+<head>
+{{> header}}  
+</head>
+<body>
+  <div class="container">
+	 {{> navbar}}
+     <form action="/login" method="POST">
+    <h4>Login Page</h4>
+    {{#error}}
+      <p>User or password invalid. Try Again.</p>
+    {{/error}}
+    <div class="row">
+      <div class="six columns">
+        <label for="email">Email</label>
+        <input class="u-full-width" type="email" name="email">
+      </div>
+    </div>
+    <div class="row">
+      <div class="six columns">
+        <label for="password">Password</label>
+        <input class="u-full-width" type="password" name="password">
+      </div>
+    </div>
+    <div class="row">
+      <div class="three columns">
+        <input class="button" type="submit" value="Login">
+      </div>
+      <div class="three columns">
+         <a class="button" href="/register">Registration</a>
+      </div>
+    <div>
+    </form>
+  </div>
+</body>
