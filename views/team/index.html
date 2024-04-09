@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<!-- file: views/professor/index.html -->
+<html>
+<head>
+
+</head>
+<body>
+ <div class="container">
+  {{> navbar}}
+  <div class="row">
+   <div>
+     <h2>Equipos a los que perteneces</h2>
+     <table><thead>
+      <tr><th>Nombre</th><th>Descripcion</th></tr>
+      </thead><tbody>
+      {{#teamsb}}
+      <tr><td>{{name}}</td>
+      <td>{{description}}</td>
+      <td>
+      <a class="button" href="team/{{id}}">Show</a> 
+      </td>
+      </tr>
+      {{/teamsb}}</tbody>
+     </table>
+    </div>
+
+    <div>
+        <h2>Equipos que administras</h2>
+        <table><thead>
+         <tr><th>Nombre</th><th>Descripcion</th></tr>
+         </thead><tbody>
+         {{#teamsadmin}}
+         <tr><td>{{name}}</td>
+         <td>{{description}}</td>
+         <td>
+         <a class="button" href="team/{{id}}">Show</a>
+         {{#login}}
+         <a class="button" href="team/{{id}}/edit">Edit</a>
+         <a class="button" href="team/{{id}}/delete">Erase</a>
+         {{/login}}
+         </td>
+         </tr>
+         {{/teamsadmin}}</tbody>
+        </table>
+        {{#login}}
+        <a class="button" href="/team/create">New</a>
+        {{/login}}
+       </div>
+   </div>
+ </div>
+</body>

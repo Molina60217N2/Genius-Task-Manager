@@ -1,17 +1,16 @@
 <!-- file: views/navbar.html -->  
+{{#login}}
 <div class="row"  style="margin-top: 20px;margin-bottom: 20px">
     <div class="twelve columns">
     <a class="button button-primary" href="/">Home</a>  
-    <a class="button button-primary" href="/professor">Professors</a>  
-    <a class="button button-primary" href="/course">Courses</a>  
-    <a class="button button-primary" href="/student">Students</a>  
-    {{#login}}
+    <a class="button button-primary" href="/professor">Ver equipos</a>  
+    <a class="button button-primary" href="/course">Ver tareas asignadas</a>  
+
+    <!-- El # es para decir if, el ^ es para decir no if -->
+    <!-- Entonces, el codigo de abajo va así: si esta login, muestra 
+      el boton de logout, si no esta login, muestra el boton de login -->
     <a class="button" style="float: right" 
        href="/logout" login >Logout</a>
-    {{/login}}
-    {{^login}}
-    <a class="button" style="float: right" 
-       href="/login" login >Login</a>
-    {{~login}}
-    </div>
+      </div>
    </div>
+{{/login}}

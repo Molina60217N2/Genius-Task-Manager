@@ -6,6 +6,7 @@
   class ProfessorController extends Controller {
     
     public function index() {  
+      //la funcion de Auth::check() devuelve true o false
       return view('professor/index',
        ['professors'=>Professor::all(),
         'title'=>'Professors List', 'login'=>Auth::check()]);

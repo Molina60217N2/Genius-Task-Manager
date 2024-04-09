@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<!-- file: views/professor/index.html -->
+<html>
+<head>
+
+</head>
+<body>
+ <div class="container">
+  {{> navbar}}
+  <div class="row">
+   <div>
+     <h2>Etiquetas del equipo</h2>
+     <table><thead>
+      <tr><th>Nombre</th><th>Descripcion</th><th>Color</th></tr>
+      </thead><tbody>
+      {{#tags}}
+      <tr><td>{{name}}</td>
+      <td>{{description}}</td>
+      <td>{{color}}</td>
+      </tr>
+      {{/tags}}</tbody>
+     </table>
+    </div>
+
+   </div>
+ </div>
+</body>

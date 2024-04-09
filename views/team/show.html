@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<!-- file: views/professor/show.html -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>{{title}}</title>
+
+
+<!-- ESTA VISTA TENDRA BOTONES PARA CREAR ETIQUETA Y CREAR TAREA 
+     LAS RUTAS PARA ESAS DOS COSAS SON: 
+    /team/idteam/tag/create
+    /team/idteam/task/create
+    ESTO CON LA INTENCION DE PODER PASAR EL ID DEL EQUIPO A LOS CONTROLADORES
+    DE AMBAS ENTIDADES, YA QUE TIENEN UNA REFERENCIA A TEAM-->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="/css/normalize.css">
+<link rel="stylesheet" href="/css/skeleton.css">
+</head>
+<body>
+ <div class="container">
+   <h1>Usuario administrador: {{admin}}</h1>
+  <div class="row">
+   <div class="eleven column" style="margin-top: 10%">
+    <h2>{{title}}</h2>
+    {{#show}}<form>{{/show}}
+      {{#create}}<form action="/team" method="POST">{{/create}}
+      {{#edit}}<form action="/team/{{id}}" method="POST">
+        <input type="hidden" name="_method" value="PUT">{{/edit}}
+     {{#team}}
+     <div class="row">
+      <div class="six columns">
+       <label for="nameInput">Name</label>
+       <input class="u-full-width" type="text"
+       {{#show}} readonly {{/show}} name="name" value="{{name}}" >
+      </div>
+      <div class="six columns">
+       <label for="descriptionInput">Description</label>
+       <input class="u-full-width" type="text"
+       {{#show}} readonly {{/show}}
+          name="description" value="{{description}}">
+      </div>
+     </div>
+     <h1>Usuarios relacionados: </h1>
+     {{#users}}
+        {{username}}
+    {{/users}}
+     <div class="row">
+         <a class="button button-primary" href="/team">Back</a>
+        </div>
+        {{#edit}}<input class="button-primary" type="submit" value="Update">{{/edit}}
+        {{#create}}<input class="button-primary" type="submit" value="Create">{{/create}}
+        {{#show}}
+        {{#isadmin}}
+        <a href="/team/{{id}}/task/create">Crear tarea para este equipo</a>
+        {{/isadmin}}
+        {{/show}}
+        {{#show}}
+        {{#isadmin}}
+        <a href="/team/{{id}}/tag/create">Crear etiqueta para este equipo</a>
+        {{/isadmin}}
+        {{/show}}
+        {{#show}}
+        <a href="/team/{{id}}/tag">Ver etiquetas de este equipo</a>
+        {{/show}}
+        {{#show}}
+        <a href="/team/{{id}}/task">Ver tareas de este equipo</a>
+        {{/show}}
+        {{/team}}
+    </form>
+    
+   </div>
+  </div>
+ </div>
+</body>

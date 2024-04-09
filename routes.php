@@ -2,25 +2,26 @@
 
 require_once('./models/Professor.php');
 require_once('./controllers/ProfessorController.php');
+require_once('./controllers/TeamController.php');
+require_once('./controllers/TagController.php');
+require_once('./controllers/TaskController.php');
 
-require_once('./controllers/BookController.php');
-require_once('./controllers/AuthorController.php');
-require_once('./controllers/PublisherController.php');
-    
-    //BOOK'S ROUTES  
-    Route::resource('/book', 'BookController');    
-    Route::get('/','BookController@index');
-    Route::get('/book/(:number)/delete','BookController@destroy');
-    // Route::get('/books', 'BookController@index');
-    // Route::get('/book/(:number)','BookController@show');
-    
-    //AUTHOR'S ROUTES
-    Route::resource('/author', 'AuthorController');
-    Route::get('/author/(:number)/delete','AuthorController@destroy');
+//TEAM ROUTES
+Route::resource('team','TeamController');
+Route::get('/team/(:number)/delete', 'TeamController@destroy');
 
-    //PUBLISHER'S ROUTES
-    Route::resource('/publisher','PublisherController');
-    Route::get('/publisher/(:number)/delete','PublisherController@destroy');
+//TAG ROUTES
+// Route::get('/team/(:number)/tag','TagController@index');
+Route::resource('tag','TagController');
+Route::get('/team/(:number)/tag','TagController@tagsperteam');
+Route::get('/team/(:number)/tag/create','TagController@createTag');
+Route::get('/tag/(:number)/delete','TagController@destroy');
+
+//TASK ROUTES
+Route::resource('task', 'TaskController');
+Route::get('/team/(:number)/task','TaskController@tasksperteam');
+Route::get('/team/(:number)/task/create','TaskController@createTask');
+Route::get('/task/(:number)/delete','TaskController@destroy');
 
       // Authentication Routes  
     Route::get('login', 
@@ -41,6 +42,9 @@ require_once('./controllers/PublisherController.php');
     //TESTING ROUTES
 
     //Esta ruta se encarga de rutear automaticamente el CRUD
+    //esta ruta nos puede ayudar si queremos pasar varios parámetros, a una funcion
+    Route::get('team/(:number)/(:number)/si', 'TeamController@test');
+    Route::get('/', 'LoginController@showLoginForm');
     Route::resource('professor', 'ProfessorController');
     Route::get('/professor/(:number)/delete','ProfessorController@destroy');
     // Route::get('/professor/(:number)/edit','ProfessorController@edit');
