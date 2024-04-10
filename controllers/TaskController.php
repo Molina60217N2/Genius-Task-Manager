@@ -15,10 +15,17 @@
           $tasks[$i]['tagname'] = $tag[0]['name'];
           $tasks[$i]['tagcolor'] = $tag[0]['color'];
         }
+        $hastasks = false;
+        if(sizeof($tasks) > 0){
+          $hastasks = true;
+        }
       return view(
         'task/index',
         ['tasks'=>$tasks,
-        'teamid'=>$teamid, 'login'=>Auth::check()]
+        'user' => false,
+        'team'=>true,
+        'hastasks' => $hastasks,
+        'teamid'=>'/'.$teamid, 'login'=>Auth::check()]
       );
     }
 
@@ -68,6 +75,36 @@
     return redirect('/team' . '/' . $teamid);
   }
 
+  //UTILITIES FUNCTIONS
+
+  public function tasksperuser(){
+    $userid = Cookie::get('userId');
+    $tasks = DB::table('task')->where('userid', $userid)->get();
+    for ($i = 0; $i < sizeof($tasks); $i++) {
+      $user = DB::table('users')->where('id', $tasks[$i]['userid'])->get();
+      $tasks[$i]['username'] = $user[0]['name'];
+
+      $tag = DB::table('tag')->where('id',$tasks[$i]['tagid'])->get();
+      $tasks[$i]['tagname'] = $tag[0]['name'];
+      $tasks[$i]['tagcolor'] = $tag[0]['color'];
+    }
+    $hastasks = false;
+    if(sizeof($tasks) > 0){
+      $hastasks = true;
+    }
+    // echo('hola');
+    // return;
+    return view(
+      'task/index',
+      ['tasks'=>$tasks,
+      'user'=>true,
+      'team' => false,
+      'hastasks' => $hastasks,
+      'teamid' => '',
+      'login'=>Auth::check()]
+    );
+  }
+
   public function edit($prof_id) {
     $prof = DB::table('professor')->find($prof_id);
     return view('professor/show',
@@ -92,9 +129,9 @@
     
   }
 
-  public function destroy($prof_id) {  
-    DB::table('professor')->delete($prof_id);
-    return redirect('/professor');
+  public function destroy($task_id) {  
+    DB::table('task')->delete($task_id);
+    return redirect('/team');
   }
 
   }

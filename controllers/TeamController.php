@@ -12,19 +12,31 @@
       //la funcion de Auth::check() devuelve true o false
       $userid = Cookie::get('userId');
       $teamsids = DB::table('userteamrel')->where('userid',$userid)->get();
+      // echo(sizeof($teamsids));
+      // return;
       //equipos que administra
       $teamsadmin = DB::table('team')->where('useradminid', $userid)->get();
       //equipos a los que pertenece
       $teamsb = [];
       for ($i = 0; $i < sizeof($teamsids); $i++)  {
-          $team = DB::table('team')->where('id', $teamsids[$i]['teamid'])->first();
-              // Si se encontró un equipo con ese ID, añadirlo al array de equipos
-              $teamsb[$i] = $team[0];
-        }
+        $team = DB::table('team')->where('id', $teamsids[$i]['teamid'])->first();
+        // Si se encontró un equipo con ese ID, añadirlo al array de equipos
+        $teamsb[$i] = $team[0];
+      }
+      $hasteamsadmin = false;
+      $hasteamsb = false;
+      if(sizeof($teamsadmin) > 0) {
+        $hasteamsadmin = true;
+      }
+      if(sizeof($teamsb) > 0) {
+        $hasteamsb = true;
+      }
       return view('team/index',
-       ['teamsb'=> $teamsb,
+       ['hasteamsadmin' => $hasteamsadmin,
+        'hasteamsb' => $hasteamsb,
+        'teamsb'=> $teamsb,
        'teamsadmin'=>$teamsadmin,
-        'title'=>'Equipos', 'login'=>Auth::check()]);
+       'title'=>'Equipos', 'login'=>Auth::check()]);
     }
 
     public function show($id) {
@@ -49,7 +61,7 @@
     }
       return view('team/show',
         ['team'=>$team,
-         'title'=>$team[0]['title'],
+         'title'=>$team[0]['name'],
          'users' => $users,
          'admin'=>$adminname,
          'show'=>true, 'create'=>false, 'edit'=>false, 'isadmin'=>$isadmin]);
@@ -124,6 +136,18 @@
     $team = DB::table('team')->where('useradminid', $userid)->get();
     if($team[0]['useradminid'] == $userid) {
         DB::table('team')->delete($team_id);
+        $rels = DB::table('userteamrel')->where('teamid',$team_id)->get();
+        for($i = 0; $i < sizeof($rels); $i++) {
+          DB::table('userteamrel')->delete($rels[$i]['id']);
+        }
+        $tasks = DB::table('task')->where('teamid',$team_id)->get();
+        for($i = 0; $i < sizeof($tasks); $i++) {
+          DB::table('task')->delete($tasks[$i]['id']);
+        }
+        $tags = DB::table('tag')->where('teamid',$team_id)->get();
+        for($i = 0; $i < sizeof($tags); $i++) {
+          DB::table('tag')->delete($tags[$i]['id']);
+        }
     }
     return redirect('/team');
   }

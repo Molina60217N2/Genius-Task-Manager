@@ -13,15 +13,19 @@
     ESTO CON LA INTENCION DE PODER PASAR EL ID DEL EQUIPO A LOS CONTROLADORES
     DE AMBAS ENTIDADES, YA QUE TIENEN UNA REFERENCIA A TEAM-->
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="/css/normalize.css">
-<link rel="stylesheet" href="/css/skeleton.css">
+<script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
+  
  <div class="container">
-   <h1>Usuario administrador: {{admin}}</h1>
+  {{#show}}
+   <h1>{{title}}</h1>
+  {{/show}}
+  {{#create}}
+  <h1>Creación de Equipo</h1>
+  {{/create}}
   <div class="row">
-   <div class="eleven column" style="margin-top: 10%">
-    <h2>{{title}}</h2>
+   <div class="eleven column" style="margin-top: 3%">
     {{#show}}<form>{{/show}}
       {{#create}}<form action="/team" method="POST">{{/create}}
       {{#edit}}<form action="/team/{{id}}" method="POST">
@@ -29,34 +33,33 @@
      {{#team}}
      <div class="row">
       <div class="six columns">
-       <label for="nameInput">Name</label>
+       <label for="nameInput">Nombre del Equipo</label>
        <input class="u-full-width" type="text"
        {{#show}} readonly {{/show}} name="name" value="{{name}}" >
       </div>
       <div class="six columns">
-       <label for="descriptionInput">Description</label>
-       <input class="u-full-width" type="text"
-       {{#show}} readonly {{/show}}
-          name="description" value="{{description}}">
+       <label for="descriptionInput">Descripción del Equipo</label>
+       <textarea class="u-full-width" name="description" {{#show}}readonly{{/show}} placeholder="{{description}}"></textarea>
+
       </div>
      </div>
      {{#show}}
      <h1>Usuarios relacionados: </h1>
-     {{#users}}
+     <div>
+      {{#users}}
         {{username}}
-    {{/users}}
+      {{/users}}
+     </div>
+     
     {{/show}}
-     <div class="row">
-         <a class="button button-primary" href="/team">Back</a>
-        </div>
-        {{#edit}}<input class="button-primary" type="submit" value="Update">{{/edit}}
-        {{#create}}<input class="button-primary" type="submit" value="Create">{{/create}}
-        {{#show}}
-        {{#isadmin}}
-        <a href="/team/{{id}}/task/create">Crear tarea para este equipo</a>
-        {{/isadmin}}
-        {{/show}}
-        {{#show}}
+    {{#edit}}<input class="button-primary" type="submit" value="Update">{{/edit}}
+    {{#create}}<input class="button-primary" type="submit" value="Create">{{/create}}
+    {{#show}}
+    {{#isadmin}}
+    <a href="/team/{{id}}/task/create">Crear tarea para este equipo</a>
+    {{/isadmin}}
+    {{/show}}
+    {{#show}}
         {{#isadmin}}
         <a href="/team/{{id}}/tag/create">Crear etiqueta para este equipo</a>
         {{/isadmin}}
@@ -71,7 +74,10 @@
         <a href="/team/{{id}}/add/user">Agregar usuario a este equipo</a>
         {{/show}}
         {{/team}}
-    </form>
+        <div class="row">
+            <a class="button button-primary" href="/team">Back</a>
+       </div>
+      </form>
     
    </div>
   </div>

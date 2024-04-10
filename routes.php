@@ -24,6 +24,7 @@ Route::resource('task', 'TaskController');
 Route::get('/team/(:number)/task','TaskController@tasksperteam');
 Route::get('/team/(:number)/task/create','TaskController@createTask');
 Route::get('/task/(:number)/delete','TaskController@destroy');
+Route::get('/tasks/user', 'TaskController@tasksperuser');
 
       // Authentication Routes  
     Route::get('login', 

@@ -2,50 +2,80 @@
 <!-- file: views/professor/index.html -->
 <html>
 <head>
-
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
- <div class="container">
+ <div>
   {{> navbar}}
-  <div class="row">
+  <div class="grid grid-cols-2 w-2/3 m-auto align-center mt-20">
    <div>
-     <h2>Equipos a los que perteneces</h2>
-     <table><thead>
-      <tr><th>Nombre</th><th>Descripcion</th></tr>
-      </thead><tbody>
-      {{#teamsb}}
-      <tr><td>{{name}}</td>
-      <td>{{description}}</td>
-      <td>
-      <a class="button" href="team/{{id}}">Show</a> 
-      </td>
-      </tr>
-      {{/teamsb}}</tbody>
-     </table>
-    </div>
+     <h2 class="text-4xl font-bold">Equipos a los que perteneces</h2>
+     {{#hasteamsb}}
+     {{#teamsb}}
+     <div class="mt-10 grid grid-cols-2 align-center">
+       <div
+       class="block rounded-lg bg-slate-500 p-6 text-surface shadow-secondary-1 text-white">
+    <h5 class="mb-2 text-2xl font-medium leading-tight">{{name}}</h5>
+    <p class="mb-4 text-base">
+      {{description}}
+    </p>
+    <a
+      href="team/{{id}}"
+      type="button"
+      class="inline-block rounded bg-cyan-600 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-primary-3 transition duration-150 ease-in-out hover:bg-primary-accent-300 hover:shadow-primary-2 focus:bg-primary-accent-300 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-primary-600 active:shadow-primary-2 dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong"
+      data-twe-ripple-init
+      data-twe-ripple-color="light">
+      Ver
+    </a>
+        </div>
+     </div>
+     {{/teamsb}}
+      {{/hasteamsb}}
+   </div>
 
     <div>
-        <h2>Equipos que administras</h2>
-        <table><thead>
-         <tr><th>Nombre</th><th>Descripcion</th></tr>
-         </thead><tbody>
-         {{#teamsadmin}}
-         <tr><td>{{name}}</td>
-         <td>{{description}}</td>
-         <td>
-         <a class="button" href="team/{{id}}">Show</a>
-         {{#login}}
-         <a class="button" href="team/{{id}}/edit">Edit</a>
-         <a class="button" href="team/{{id}}/delete">Erase</a>
-         {{/login}}
-         </td>
-         </tr>
-         {{/teamsadmin}}</tbody>
-        </table>
+        <h2 class="text-4xl font-bold">Equipos que administras</h2>
+        {{#hasteamsadmin}}
+        {{#teamsadmin}}
+        <div class="mt-10 grid grid-cols-2 align-center">
+          <div
+    class="block rounded-lg bg-slate-500 p-6 text-surface shadow-secondary-1 text-white">
+    <h5 class="mb-2 text-2xl font-medium leading-tight">{{name}}</h5>
+    <p class="mb-4 text-base">
+      {{description}}
+    </p>
+    <a
+      href="team/{{id}}"
+      type="button"
+      class="inline-block rounded bg-cyan-600 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-primary-3 transition duration-150 ease-in-out hover:bg-primary-accent-300 hover:shadow-primary-2 focus:bg-primary-accent-300 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-primary-600 active:shadow-primary-2 dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong"
+      data-twe-ripple-init
+      data-twe-ripple-color="light">
+      Ver
+    </a>
+    <a
+      href="team/{{id}}/edit"
+      type="button"
+      class="inline-block rounded bg-yellow-600 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-primary-3 transition duration-150 ease-in-out hover:bg-primary-accent-300 hover:shadow-primary-2 focus:bg-primary-accent-300 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-primary-600 active:shadow-primary-2 dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong"
+      data-twe-ripple-init
+      data-twe-ripple-color="light">
+      Editar
+    </a>
+    <a
+      href="team/{{id}}/delete"
+      type="button"
+      class="inline-block rounded bg-red-700 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-primary-3 transition duration-150 ease-in-out hover:bg-primary-accent-300 hover:shadow-primary-2 focus:bg-primary-accent-300 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-primary-600 active:shadow-primary-2 dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong"
+      data-twe-ripple-init
+      data-twe-ripple-color="light">
+      Eliminar
+    </a>
+          </div>
+        </div>
+        {{/teamsadmin}}
+        {{/hasteamsadmin}}
         {{#login}}
-        <a class="button" href="/team/create">New</a>
+        <a class="mt-10 inline-block rounded bg-green-700 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-primary-3 transition duration-150 ease-in-out hover:bg-primary-accent-300 hover:shadow-primary-2 focus:bg-primary-accent-300 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-primary-600 active:shadow-primary-2 dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong" href="/team/create">Crear Nuevo Equipo</a>
         {{/login}}
-       </div>
+    </div>
    </div>
  </div>
 </body>

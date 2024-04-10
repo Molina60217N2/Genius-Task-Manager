@@ -8,7 +8,13 @@
  <div class="container">
   {{> navbar}}
     <div>
+        {{#team}}
         <h2>Tareas del equipo</h2>
+        {{/team}}
+        {{#user}}
+        <h2>Tareas del usuario</h2>
+        {{/user}}
+        {{#hastasks}}
         <table><thead>
          <tr><th>Nombre</th><th>Descripcion</th><th>Responsable</th><th>Etiqueta</th></tr>
          </thead><tbody>
@@ -18,17 +24,18 @@
          <td>{{username}}</td>
          <td style="background-color: {{tagcolor}};">{{tagname}}</td>
          <td>
-         <a class="button" href="team/{{id}}">Show</a>
+         <a class="button" href="/task/{{id}}">Show</a>
          {{#login}}
-         <a class="button" href="team/{{id}}/edit">Edit</a>
-         <a class="button" href="team/{{id}}/delete">Erase</a>
+         <a class="button" href="/team/{{id}}/task/edit">Edit</a>
+         <a class="button" href="/task/{{id}}/delete">Erase</a>
          {{/login}}
          </td>
          </tr>
          {{/tasks}}</tbody>
         </table>
+        {{/hastasks}}
         {{#login}}
-        <a class="button" href="/team/{{teamid}}">Back</a>
+        <a class="button" href="/team{{teamid}}">Back</a>
         {{/login}}
        </div>
    </div>

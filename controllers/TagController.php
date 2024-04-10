@@ -6,9 +6,14 @@
   class TagController extends Controller {
     public function tagsperteam($teamid){
       $tags = DB::table('tag')->where('teamid',$teamid)->get();
+      $hastags = false;
+      if(sizeof($tags) > 0) {
+        $hastags = true;
+      }
       return view(
         'tag/index',
         ['tags'=>$tags,
+        'hastags'=> $hastags,
         'teamid'=>$teamid, 'login'=>Auth::check()]
       );
     }
