@@ -2,6 +2,7 @@
   // file: controllers/ProfessorController.php
 
   require_once('./models/Team.php');
+  require_once('./models/UserModel.php');
   
   class TeamController extends Controller {
 
@@ -40,6 +41,7 @@
         $users[$i]['username'] = $user[0]['name'];
     }
     $admin = DB::table('users')->where('id', $team[0]['useradminid'])->first();
+    $users[sizeof($usersids)]['username'] = $admin[0]['name'];
     $adminname = $admin[0]['name'];
     $isadmin = false;
     if($admin[0]['id'] == Cookie::get('userId')) {
@@ -70,6 +72,26 @@
     DB::table('team')->insert($team);
 
     return redirect('/team');
+  }
+
+  //FUNCIONES PARA AGREGAR USUARIOS A EQUIPO
+  public function adduser($teamid){
+    $users = UserModel::all();
+    return view('/team/adduser',
+    [
+      'teamid'=>$teamid,
+      'users'=>$users,
+    ]);
+  }
+
+  public function storeuser($smth = null){
+    $user = Input::get('user');
+    $teamid = Input::get('teamid');
+    // echo($user);
+    // return;
+    $rel = ['userid'=>$user,'teamid'=>$teamid];
+    DB::table('userteamrel')->insert($rel);
+    return redirect("/team");
   }
 
   //VISTAS Y FUNCIONALIDADES DE EDICION PENDIENTES

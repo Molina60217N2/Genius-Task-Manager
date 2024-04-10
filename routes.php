@@ -9,6 +9,8 @@ require_once('./controllers/TaskController.php');
 //TEAM ROUTES
 Route::resource('team','TeamController');
 Route::get('/team/(:number)/delete', 'TeamController@destroy');
+Route::get('/team/(:number)/add/user','TeamController@adduser');
+Route::post('/team/store/user', 'TeamController@storeuser');
 
 //TAG ROUTES
 // Route::get('/team/(:number)/tag','TagController@index');

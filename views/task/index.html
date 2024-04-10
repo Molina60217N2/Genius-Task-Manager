@@ -1,1 +1,36 @@
-<h1>HOLLAAA</h1>
+<!DOCTYPE html>
+<!-- file: views/professor/index.html -->
+<html>
+<head>
+
+</head>
+<body>
+ <div class="container">
+  {{> navbar}}
+    <div>
+        <h2>Tareas del equipo</h2>
+        <table><thead>
+         <tr><th>Nombre</th><th>Descripcion</th><th>Responsable</th><th>Etiqueta</th></tr>
+         </thead><tbody>
+         {{#tasks}}
+         <tr><td>{{name}}</td>
+         <td>{{description}}</td>
+         <td>{{username}}</td>
+         <td style="background-color: {{tagcolor}};">{{tagname}}</td>
+         <td>
+         <a class="button" href="team/{{id}}">Show</a>
+         {{#login}}
+         <a class="button" href="team/{{id}}/edit">Edit</a>
+         <a class="button" href="team/{{id}}/delete">Erase</a>
+         {{/login}}
+         </td>
+         </tr>
+         {{/tasks}}</tbody>
+        </table>
+        {{#login}}
+        <a class="button" href="/team/{{teamid}}">Back</a>
+        {{/login}}
+       </div>
+   </div>
+ </div>
+</body>

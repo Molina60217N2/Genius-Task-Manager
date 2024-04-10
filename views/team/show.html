@@ -40,10 +40,12 @@
           name="description" value="{{description}}">
       </div>
      </div>
+     {{#show}}
      <h1>Usuarios relacionados: </h1>
      {{#users}}
         {{username}}
     {{/users}}
+    {{/show}}
      <div class="row">
          <a class="button button-primary" href="/team">Back</a>
         </div>
@@ -64,6 +66,9 @@
         {{/show}}
         {{#show}}
         <a href="/team/{{id}}/task">Ver tareas de este equipo</a>
+        {{/show}}
+        {{#show}}
+        <a href="/team/{{id}}/add/user">Agregar usuario a este equipo</a>
         {{/show}}
         {{/team}}
     </form>

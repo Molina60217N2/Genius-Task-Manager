@@ -7,6 +7,14 @@
     
     public function tasksperteam($teamid) {  
         $tasks = DB::table('task')->where('teamid',$teamid)->get();
+        for ($i = 0; $i < sizeof($tasks); $i++) {
+          $user = DB::table('users')->where('id', $tasks[$i]['userid'])->get();
+          $tasks[$i]['username'] = $user[0]['name'];
+
+          $tag = DB::table('tag')->where('id',$tasks[$i]['tagid'])->get();
+          $tasks[$i]['tagname'] = $tag[0]['name'];
+          $tasks[$i]['tagcolor'] = $tag[0]['color'];
+        }
       return view(
         'task/index',
         ['tasks'=>$tasks,
