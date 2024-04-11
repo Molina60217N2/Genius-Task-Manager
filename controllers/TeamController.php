@@ -36,6 +36,7 @@
         'hasteamsb' => $hasteamsb,
         'teamsb'=> $teamsb,
        'teamsadmin'=>$teamsadmin,
+       'username'=>Cookie::get('username'),
        'title'=>'Equipos', 'login'=>Auth::check()]);
     }
 
@@ -59,20 +60,39 @@
     if($admin[0]['id'] == Cookie::get('userId')) {
       $isadmin = true;
     }
+    $tasks = DB::table('task')->where('teamid', $id)->get();
+    for($i = 0; $i < sizeof($tasks); $i++){
+      $usert = DB::table('users')->where('id',$tasks[$i]['userid'])->first();
+      $tagt = DB::table('tag')->where('id', $tasks[$i]['tagid'])->first();
+      $tasks[$i]['username'] = $usert[0]['name'];
+      $tasks[$i]['tagname'] = $tagt[0]['name'];
+      $tasks[$i]['tagcolor'] = $tagt[0]['color'];
+      $tasks[$i]['taskname'] = $tasks[$i]['name'];
+      $tasks[$i]['taskdescription'] = $tasks[$i]['description'];
+      $tasks[$i]['taskid'] = $tasks[$i]['id'];
+    }
+    $hastasks = false;
+    if(sizeof($tasks) > 0){
+      $hastasks = true;
+    }
+    // echo($tasks[0]['username']);
+    // return;
       return view('team/show',
         ['team'=>$team,
          'title'=>$team[0]['name'],
          'users' => $users,
+         'tasks' => $tasks,
+         'hastasks' => $hastasks,
          'admin'=>$adminname,
-         'show'=>true, 'create'=>false, 'edit'=>false, 'isadmin'=>$isadmin]);
+         'show'=>true, 'create'=>false, 'edit'=>false, 'isadmin'=>$isadmin, 'login'=>Auth::check()]);
     }
 
     public function create() {
-      $team = ['name'=>'','description'=>''];
+    $team = ['name'=>'','description'=>''];
     return view('team/show',
       ['title'=>'Creación de equipo',
       'team'=>$team,
-      'show'=>false,'create'=>true,'edit'=>false]);
+      'show'=>false,'create'=>true,'edit'=>false, 'login'=>Auth::check()]);
   }
 
   public function store($smth = null) {
@@ -89,10 +109,14 @@
   //FUNCIONES PARA AGREGAR USUARIOS A EQUIPO
   public function adduser($teamid){
     $users = UserModel::all();
+    $team = DB::table('team')->where('id',$teamid)->first();
+    $teamname = $team[0]['name'];
     return view('/team/adduser',
     [
       'teamid'=>$teamid,
+      'teamname'=>$teamname,
       'users'=>$users,
+      'login'=>Auth::check(),
     ]);
   }
 
@@ -103,15 +127,15 @@
     // return;
     $rel = ['userid'=>$user,'teamid'=>$teamid];
     DB::table('userteamrel')->insert($rel);
-    return redirect("/team");
+    return redirect("/team".'/'.$teamid);
   }
 
   //VISTAS Y FUNCIONALIDADES DE EDICION PENDIENTES
-  public function edit($prof_id) {
-    $prof = DB::table('professor')->find($prof_id);
-    return view('professor/show',
-      ['professor'=>$prof,
-       'title'=>'Professor Edit','courses'=>false,
+  public function edit($team_id) {
+    $prof = DB::table('team')->find($team_id);
+    return view('team/show',
+      ['team'=>$prof,
+       'title'=>'Editar Información de Equipo',
        'show'=>false,'create'=>false,'edit'=>true]);
   }
 

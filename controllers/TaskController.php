@@ -30,10 +30,6 @@
     }
 
     public function show($id) {
-      // $book = DB::table('book')->find(3);
-      // // echo($book[0]['title']);
-
-      // // return;
       $prof = Professor::find($id);
       return view('professor/show',
         ['professor'=>$prof,
@@ -55,12 +51,12 @@
     $own = DB::table('users')-> where('id', Cookie::get('userId'))->first();
     $users[sizeof($usersids)] = $own[0];
     return view('task/show',
-      ['title'=>'Task Create',
+      ['title'=>'Creación de Tarea',
       'task'=>$task,
       'teamid'=>$teamid,
       'tags'=>$tags,
       'users' =>$users,
-      'show'=>false,'create'=>true,'edit'=>false]);
+      'show'=>false,'create'=>true,'edit'=>false, 'login'=>Auth::check()]);
   }
 
   public function store($smth = null) {
@@ -129,9 +125,11 @@
     
   }
 
-  public function destroy($task_id) {  
+  public function destroy($task_id) {
+    $task = DB::table('task')->where('id',$task_id)->first();
+    $teamid = $task[0]['teamid'];  
     DB::table('task')->delete($task_id);
-    return redirect('/team');
+    return redirect('/team'.'/'.$teamid);
   }
 
   }

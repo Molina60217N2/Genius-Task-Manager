@@ -1,16 +1,15 @@
 <!-- file: views/navbar.html -->  
 {{#login}}
-<div class="row"  style="margin-top: 20px;margin-bottom: 20px">
+<div class="p-6">
     <div class="twelve columns">
-    <a class="button button-primary" href="/">Home</a>  
-    <a class="button button-primary" href="/professor">Ver equipos</a>  
-    <a class="button button-primary" href="/tasks/user">Ver tareas asignadas</a>  
+    <a class="text-xl inline-block bg-purple-300 rounded-full px-3 py-1 font-semibold text-gray-700 mr-2 mb-2" href="/team">Ver equipos</a>  
+    <a class="text-xl inline-block bg-purple-300 rounded-full px-3 py-1 font-semibold text-gray-700 mr-2 mb-2" href="/tasks/user">Ver tareas asignadas</a>  
 
     <!-- El # es para decir if, el ^ es para decir no if -->
     <!-- Entonces, el codigo de abajo va así: si esta login, muestra 
       el boton de logout, si no esta login, muestra el boton de login -->
-    <a class="button" style="float: right" 
-       href="/logout" login >Logout</a>
+    <a class="text-xl inline-block bg-purple-300 rounded-full px-3 py-1 font-semibold text-gray-700 mr-2 mb-2 float-right" 
+       href="/logout" login >Cerrar Sesión</a>
       </div>
    </div>
 {{/login}}

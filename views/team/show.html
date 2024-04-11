@@ -12,12 +12,141 @@
     /team/idteam/task/create
     ESTO CON LA INTENCION DE PODER PASAR EL ID DEL EQUIPO A LOS CONTROLADORES
     DE AMBAS ENTIDADES, YA QUE TIENEN UNA REFERENCIA A TEAM-->
+
+
+    <!-- Voy a intentar hacer que si es show, que muestre las cards de las tareas, y si es create o edit, que muestre el formulario -->
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="https://cdn.tailwindcss.com"></script>
+{{> navbar}}
 </head>
+{{#team}}
 <body>
-  
- <div class="container">
+
+  {{#show}}
+  <div class="grid items-center justify-center w-3/4 mx-auto">
+    <h1 class="text-4xl font-bold text-center mt-10">{{title}}</h1>
+      <p class="text-base text-center font-bold mt-4">{{description}}</p>
+      <p class="text-base text-center font-bold mt-4">Administrador: <span class="text-purple-700 font-bold">{{admin}}</span></p>
+      <p class="text-base text-center font-bold mt-4">Integrantes del equipo:</p>
+      {{#users}}
+      <span class="text-center text-cyan-500 font-bold">{{username}}</span>
+      {{/users}}
+    <h2 class="text-3xl font-bol text-center mt-4">Tareas para el equipo: </h2>
+  </div>
+  {{#hastasks}}
+  <div class="grid grid-cols-3 items-center justify-center w-3/4 mx-auto">
+    {{#tasks}}
+    <div class="max-w-sm rounded overflow-hidden shadow-lg">
+      <div class="px-6 py-4">
+        <div class="font-bold text-xl mb-2">{{taskname}}</div>
+        <p class="text-gray-700 text-base">
+          {{taskdescription}}
+        </p>
+        <p class="text-gray-700 text-base">
+          Usuario asignado: <span class="text-purple-700 font-bold">{{username}}</span>
+        </p>
+        <div class="pt-4 pb-2">
+          <span style="background-color: {{tagcolor}};" class="inline-block rounded-full px-3 py-1 text-sm font-bold text-white mr-2 mb-2">{{tagname}}</span>
+        </div>
+      </div>
+      <div class="px-6 pt-4 pb-2">
+        {{#isadmin}}
+        <a href="/task/{{taskid}}/edit" class="inline-block bg-cyan-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">Editar tarea</a>
+        <a href="/task/{{taskid}}/delete" class="inline-block bg-red-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">Eliminar tarea</a>
+        {{/isadmin}}
+      </div>
+    </div>
+    {{/tasks}}
+  </div>
+  {{/hastasks}}
+  {{#isadmin}}
+  <div class="w-2/4 mx-auto grid grid-cols-3 items-center gap-10 mt-20">
+    <a href="/team/{{id}}/task/create" class="text-center bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+      Crear tarea nueva
+    </a>
+    <a href="/team/{{id}}/tag/create" class="text-center bg-cyan-500 hover:bg-cyan-700 text-white font-bold py-2 px-4 rounded">
+      Crear etiqueta para tareas
+    </a>
+    <a href="/team/{{id}}/add/user" class="text-center bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded">
+      Agregar usuario al equipo
+    </a>
+  </div>
+  {{/isadmin}}
+  {{/show}}
+  {{#create}}
+    <div class="grid w-3/4 mx-auto items-center">
+      <h1 class="text-4xl font-bold text-center mt-10">{{title}}</h1>
+      <form action="/team" method="POST" class="w-full max-w-sm mx-auto mt-20">
+        <div class="md:flex md:items-center mb-6">
+          <div class="md:w-1/3">
+            <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="inline-full-name">
+              Nombre del equipo
+            </label>
+          </div>
+          <div class="md:w-2/3">
+            <input class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" name="name" type="text" value={{name}}>
+          </div>
+        </div>
+        <div class="md:flex md:items-center mb-6">
+          <div class="md:w-1/3">
+            <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="inline-password">
+              Descripción del Equipo
+            </label>
+          </div>
+          <div class="md:w-2/3">
+            <input class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" name="description" type="text" placeholder={{description}}>
+          </div>
+        </div>
+        <div class="md:flex md:items-center">
+          <div class="md:w-1/3"></div>
+          <div class="md:w-2/3">
+            <input type="submit" class="shadow bg-purple-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded" value="Crear Equipo"/>
+          </div>
+        </div>
+          <div class="flex items-center justify-center mt-10">
+            <a href="/team" class="shadow bg-yellow-500 hover:bg-yellow-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded">Volver</a>
+          </div>
+
+        
+      </form>
+    </div>
+  {{/create}}
+  {{#edit}}
+  <h1 class="text-4xl font-bold text-center mt-10">{{title}}</h1>
+  <form action="/team/{{id}}" method="POST" class="w-full max-w-sm mx-auto mt-20">
+    <input type="hidden" name="_method" value="PUT">
+    <div class="md:flex md:items-center mb-6">
+      <div class="md:w-1/3">
+        <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="inline-full-name">
+          Nombre del equipo
+        </label>
+      </div>
+      <div class="md:w-2/3">
+        <input class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" name="name" type="text" value="{{name}}"">
+      </div>
+    </div>
+    <div class="md:flex md:items-center mb-6">
+      <div class="md:w-1/3">
+        <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="inline-password">
+          Descripción del Equipo
+        </label>
+      </div>
+      <div class="md:w-2/3">
+        <input class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" name="description" type="text" value="{{description}}"">
+      </div>
+    </div>
+    <div class="md:flex md:items-center">
+      <div class="md:w-1/3"></div>
+      <div class="md:w-2/3">
+        <input type="submit" class="shadow bg-purple-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded" value="Crear Equipo"/>
+      </div>
+    </div>
+    
+  </form>
+  {{/edit}}
+  {{/team}}
+</body>
+ <!-- <div class="container">
   {{#show}}
    <h1>{{title}}</h1>
   {{/show}}
@@ -81,5 +210,4 @@
     
    </div>
   </div>
- </div>
-</body>
+ </div> -->

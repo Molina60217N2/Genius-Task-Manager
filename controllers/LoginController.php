@@ -18,6 +18,7 @@
         $user = DB::table('users')->where('email', $email)->first();
         $userid = $user[0]['id'];
         Cookie::queue('userId', $userid, 1000);
+        Cookie::queue('username', $user[0]['name'], 1000);
         //Aqui debemos redirigir a la vista que viene despues del login, en este caso
         //sería a ver los equipos
         return redirect('/team');
