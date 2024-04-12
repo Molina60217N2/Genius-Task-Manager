@@ -19,12 +19,17 @@
     }
 
     public function createTag($teamid) {
+      $team = DB::table('team')->where('id',$teamid)->first();
+      $teamname = $team[0]['name'];
+      $tags = DB::table('tag')->where('teamid',$teamid)->get();
       $tag = ['name'=>'','color'=>'',
                'teamid'=>''];
     return view('tag/show',
       ['title'=>'Tag Create',
       'tag'=>$tag,
+      'tags'=>$tags,
       'teamid'=>$teamid,
+      'teamname' => $teamname,
       'show'=>false,'create'=>true,'edit'=>false]);
   }
 

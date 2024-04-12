@@ -2,42 +2,40 @@
 <!-- file: views/professor/index.html -->
 <html>
 <head>
-
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
- <div class="container">
   {{> navbar}}
-    <div>
-        {{#team}}
-        <h2>Tareas del equipo</h2>
-        {{/team}}
-        {{#user}}
-        <h2>Tareas del usuario</h2>
-        {{/user}}
-        {{#hastasks}}
-        <table><thead>
-         <tr><th>Nombre</th><th>Descripcion</th><th>Responsable</th><th>Etiqueta</th></tr>
-         </thead><tbody>
-         {{#tasks}}
-         <tr><td>{{name}}</td>
-         <td>{{description}}</td>
-         <td>{{username}}</td>
-         <td style="background-color: {{tagcolor}};">{{tagname}}</td>
-         <td>
-         <a class="button" href="/task/{{id}}">Show</a>
-         {{#login}}
-         <a class="button" href="/team/{{id}}/task/edit">Edit</a>
-         <a class="button" href="/task/{{id}}/delete">Erase</a>
-         {{/login}}
-         </td>
-         </tr>
-         {{/tasks}}</tbody>
-        </table>
+  <div class="w-full mx-auto">
+
+    <h1 class="text-4xl font-bold text-center mt-10">Tareas de {{user}}</h1>
+
+    <div class="w-2/3 mx-auto grid grid-cols-3">
+      {{#hastasks}}
+      {{#tasks}}
+        <div class="max-w-sm rounded overflow-hidden shadow-lg">
+          <div class="px-6 py-4">
+            <div class="font-bold text-xl mb-2">{{name}}</div>
+            <p class="text-gray-700 text-base">
+              {{description}}
+            </p>
+            <p class="text-gray-700 text-base">
+              Equipo: <a href="/team/{{teamid}}" class="text-purple-700 font-bold">{{teamname}}</a>
+            </p>
+            <div class="flex">
+              <div class="pt-4 pb-2">
+                <span style="background-color: {{tagcolor}};" class="inline-block rounded-full px-3 py-1 text-sm font-bold text-white mr-2 mb-2">{{tagname}}</span>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+        {{/tasks}}
         {{/hastasks}}
-        {{#login}}
-        <a class="button" href="/team{{teamid}}">Back</a>
-        {{/login}}
        </div>
-   </div>
- </div>
+
+        <div class="mx-auto flex items-center justify-center mt-10">
+          <a href="/team" class="shadow bg-yellow-500 hover:bg-yellow-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded">Volver</a>
+        </div>
+       </div>
 </body>
