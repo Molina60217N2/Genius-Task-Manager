@@ -177,6 +177,7 @@
       'show'=>false,'create'=>false,'edit'=>true]);
   }
 
+  
   public function update($_,$prof_id = null) {
     $name = Input::get('name');
     $degree = Input::get('degree');
