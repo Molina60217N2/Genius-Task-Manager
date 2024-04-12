@@ -132,10 +132,11 @@
 
   //VISTAS Y FUNCIONALIDADES DE EDICION PENDIENTES
   public function edit($team_id) {
-    $prof = DB::table('team')->find($team_id);
+    $team = DB::table('team')->find($team_id);
     return view('team/show',
-      ['team'=>$prof,
+      ['team'=>$team,
        'title'=>'Editar Información de Equipo',
+       'login'=>Auth::check(),
        'show'=>false,'create'=>false,'edit'=>true]);
   }
 
@@ -178,11 +179,5 @@
 
   //TESTING FUNCTIONS
 
-  public function test($id, $id2) {
-    echo($id);
-    echo('mjm');
-    echo($id2);
-    return;
-  }
   }
 ?>

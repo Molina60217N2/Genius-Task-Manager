@@ -135,79 +135,14 @@
         <input class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" name="description" type="text" value="{{description}}"">
       </div>
     </div>
-    <div class="md:flex md:items-center">
-      <div class="md:w-1/3"></div>
-      <div class="md:w-2/3">
-        <input type="submit" class="shadow bg-purple-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded" value="Crear Equipo"/>
+      <div class="flex items-center justify-center mt-10">
+        <input type="submit" class="shadow bg-purple-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded" value="Actualizar Equipo"/>
       </div>
+    <div class="flex items-center justify-center mt-10">
+      <a href="/team" class="shadow bg-yellow-500 hover:bg-yellow-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded">Volver</a>
     </div>
     
   </form>
   {{/edit}}
   {{/team}}
 </body>
- <!-- <div class="container">
-  {{#show}}
-   <h1>{{title}}</h1>
-  {{/show}}
-  {{#create}}
-  <h1>Creación de Equipo</h1>
-  {{/create}}
-  <div class="row">
-   <div class="eleven column" style="margin-top: 3%">
-    {{#show}}<form>{{/show}}
-      {{#create}}<form action="/team" method="POST">{{/create}}
-      {{#edit}}<form action="/team/{{id}}" method="POST">
-        <input type="hidden" name="_method" value="PUT">{{/edit}}
-     {{#team}}
-     <div class="row">
-      <div class="six columns">
-       <label for="nameInput">Nombre del Equipo</label>
-       <input class="u-full-width" type="text"
-       {{#show}} readonly {{/show}} name="name" value="{{name}}" >
-      </div>
-      <div class="six columns">
-       <label for="descriptionInput">Descripción del Equipo</label>
-       <textarea class="u-full-width" name="description" {{#show}}readonly{{/show}} placeholder="{{description}}"></textarea>
-
-      </div>
-     </div>
-     {{#show}}
-     <h1>Usuarios relacionados: </h1>
-     <div>
-      {{#users}}
-        {{username}}
-      {{/users}}
-     </div>
-     
-    {{/show}}
-    {{#edit}}<input class="button-primary" type="submit" value="Update">{{/edit}}
-    {{#create}}<input class="button-primary" type="submit" value="Create">{{/create}}
-    {{#show}}
-    {{#isadmin}}
-    <a href="/team/{{id}}/task/create">Crear tarea para este equipo</a>
-    {{/isadmin}}
-    {{/show}}
-    {{#show}}
-        {{#isadmin}}
-        <a href="/team/{{id}}/tag/create">Crear etiqueta para este equipo</a>
-        {{/isadmin}}
-        {{/show}}
-        {{#show}}
-        <a href="/team/{{id}}/tag">Ver etiquetas de este equipo</a>
-        {{/show}}
-        {{#show}}
-        <a href="/team/{{id}}/task">Ver tareas de este equipo</a>
-        {{/show}}
-        {{#show}}
-        <a href="/team/{{id}}/add/user">Agregar usuario a este equipo</a>
-        {{/show}}
-        {{/team}}
-        <div class="row">
-            <a class="button button-primary" href="/team">Back</a>
-       </div>
-      </form>
-    
-   </div>
-  </div>
- </div> -->

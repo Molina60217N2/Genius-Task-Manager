@@ -76,6 +76,12 @@
   public function tasksperuser(){
     $userid = Cookie::get('userId');
     $tasks = DB::table('task')->where('userid', $userid)->get();
+    $rel = DB::table('userteamrel')->where('userid',$userid)->get();
+    $teams = [];
+    for($i = 0; $i < sizeof($rel); $i++){
+      $team = DB::table('team')->where('id',$rel[$i]['teamid'])->first();
+      $teams[] = $team[0];
+    }
     for ($i = 0; $i < sizeof($tasks); $i++) {
       $user = DB::table('users')->where('id', $tasks[$i]['userid'])->first();
       $username = $user[0]['name'];
@@ -89,23 +95,86 @@
     if(sizeof($tasks) > 0){
       $hastasks = true;
     }
-    // echo('hola');
-    // return;
     return view(
       'task/index',
       ['tasks'=>$tasks,
+      'teams'=>$teams,
+      'filter'=>false,
       'user'=>$username,
       'hastasks' => $hastasks,
       'login'=>Auth::check()]
     );
   }
 
-  public function edit($prof_id) {
-    $prof = DB::table('professor')->find($prof_id);
-    return view('professor/show',
-      ['professor'=>$prof,
-       'title'=>'Professor Edit','courses'=>false,
-       'show'=>false,'create'=>false,'edit'=>true]);
+  public function filter(){
+    $teamid = Input::get('teamid');
+    $userid = Cookie::get('userId');
+    $user = DB::table('users')->where('id',$userid)->first();
+    $username = $user[0]['name'];
+    $tasks = DB::table('task')->where('teamid', $teamid)->get();
+    $rel = DB::table('userteamrel')->where('userid',$userid)->get();
+    $teams = [];
+    for($i = 0; $i < sizeof($rel); $i++){
+      $team = DB::table('team')->where('id',$rel[$i]['teamid'])->first();
+      $teams[] = $team[0];
+    }
+    $usertasks = [];
+    for($i = 0; $i < sizeof($tasks); $i++) {
+      if($tasks[$i]['userid'] == $userid){
+        $usertasks[] = $tasks[$i];
+      }
+    }
+    for($i = 0; $i < sizeof($usertasks); $i++) {
+      $tag = DB::table('tag')->where('id',$usertasks[$i]['tagid'])->get();
+      $usertasks[$i]['tagname'] = $tag[0]['name'];
+      $usertasks[$i]['tagcolor'] = $tag[0]['color'];
+      $team = DB::table('team')->where('id', $usertasks[$i]['teamid'])->first();
+      $usertasks[$i]['teamname'] = $team[0]['name'];
+    }
+    $hastasks = false;
+    if(sizeof($usertasks) > 0){
+      $hastasks = true;
+    }
+    // echo($teamid);
+    // return;
+    return view(
+      'task/index',
+      ['tasks'=>$usertasks,
+      'teams'=>$teams,
+      'filter'=>true,
+      'filtername' => $usertasks[0]['teamname'],
+      'user'=>$username,
+      'hastasks' => $hastasks,
+      'login'=>Auth::check()]
+    );
+
+  }
+  public function edit($task_id) {
+    $task = DB::table('task')->find($task_id);
+    $tags = DB::table('tag')->where('teamid', $task[0]['teamid'])->get();
+    for($i = 0; $i < sizeof($tags); $i++){
+      $tags[$i]['tagname'] = $tags[$i]['name'];
+      $tags[$i]['tagid'] = $tags[$i]['id'];
+    }
+    $usersids = DB::table('userteamrel')->where('teamid', $task[0]['teamid'])->get();
+    $users = [];
+    for ($i = 0; $i < sizeof($usersids); $i++) {
+      $user = DB::table('users')->where('id', $usersids[$i]['userid'])->first();
+      $users[$i] = $user[0];
+      $users[$i]['username'] = $user[0]['name'];
+      $users[$i]['userid'] = $user[0]['id'];
+    }
+    $own = DB::table('users')-> where('id', Cookie::get('userId'))->first();
+    $users[sizeof($usersids)] = $own[0];
+    return view('task/show',
+      [
+      'title'=>'Edición de Tarea',
+      'tasku'=>$task,
+      'teamid'=>$task[0]['teamid'],
+      'tagsu'=>$tags,
+      'usersu' =>$users,
+      'login'=>Auth::check(),
+      'show'=>false,'create'=>false,'edit'=>true]);
   }
 
   public function update($_,$prof_id = null) {
