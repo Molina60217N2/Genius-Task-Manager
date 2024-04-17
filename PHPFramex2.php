@@ -658,15 +658,6 @@ class DB {
 	return substr($result,4);
   }
 
-  private static function set_changes($params) {
-    $result = "";
-    foreach (array_keys($params) as $item) {
-      $result .= $item. "=?,";
-    }
-    // Remove last commma before returning the result.
-    return substr($result, 0, strlen($result)-1); 
-  }
-
   private static function execute($query,$values) {
 	if (empty(self::$db_config)) {
 	  self::init();
@@ -748,20 +739,10 @@ class DB {
 
   public static function _update($params,$item) {
     $query = "UPDATE ".$params['table']." SET ";
-    $query .= self::set_changes($item);
+    $query .= self::conditions($item,',');
     $query .= " WHERE ".self::conditions($params['where'],' AND ');
     $values = array_values($item);
-    // $values = array_merge($values,[$params['where'][0][3]]); // Directly retrieves the ID from 'where'.
-    
-    // Retrieve the ID and merge with the values array.
-    $where_values = [];
-    if (array_key_exists('where',$params)) {
-      $where_values = array_map(
-	      function($item){return $item[3];}, $params['where']
-	    );
-    }
-
-    $values = array_merge($values,$where_values);
+    $values = array_merge($values,array_values($params['where']));
     self::execute($query,$values);
   }
 
@@ -775,8 +756,8 @@ class DB {
     if (array_key_exists('where',$params)) {
       $query .= " WHERE ".self::conditions($params['where']);
       $values = array_map(
-	      function($item){return $item[3];}, $params['where']
-	    );
+	    function($item){return $item[3];}, $params['where']
+	  );
     }
     self::execute($query,$values);
   }
@@ -821,12 +802,12 @@ class Model {
   }
 
   public static function update($id,$item) {
-    $params = ['table' => static::$table,'where'=>[["AND",'id',"=",$id]]];
+    $params = ['table' => static::$table,'where'=>[["AND",$field,"=",$value]]];
     DB::_update($params,$item);
   }
 
   public static function destroy($id) {
-    $params = ['table' => static::$table,'where'=>[["AND",'id',"=",$id]]];
+    $params = ['table' => static::$table,'where'=>[["AND",$field,"=",$value]]];
     DB::_delete($params);
   }
 

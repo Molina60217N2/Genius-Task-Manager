@@ -140,18 +140,13 @@
        'show'=>false,'create'=>false,'edit'=>true]);
   }
 
-  public function update($_,$prof_id = null) {
+  public function update($_,$team_id = null) {
     $name = Input::get('name');
-    $degree = Input::get('degree');
-    $email = Input::get('email');
-    $phone = Input::get('phone');
-    $prof = ['name'=>$name,'degree'=>$degree,
-             'email'=>$email,'phone'=>$phone];
-             DB::table('professor')->update($prof_id,$prof);
-             echo($prof_id);
-             return;
-             return redirect('/professor');
-             Professor::update($prof_id, $prof);
+    $description = Input::get('description');
+    $team = ['name'=>$name,'description'=>$description];
+
+             DB::table('team')->update($team_id,$team);
+             return redirect('/team');
              
     
   }

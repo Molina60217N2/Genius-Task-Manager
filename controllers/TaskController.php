@@ -29,14 +29,6 @@
       );
     }
 
-    public function show($id) {
-      $prof = Professor::find($id);
-      return view('professor/show',
-        ['professor'=>$prof,
-         'title'=>'Professor Detail',
-        'show'=>true, 'create'=>false, 'edit'=>false]);
-    }
-
     public function createTask($teamid) {
     $task = ['name'=>'','description'=>'',
                'tagid'=>'','teamid'=>'', 'userid'=>''];
@@ -91,6 +83,10 @@
       $team = DB::table('team')->where('id', $tasks[$i]['teamid'])->first();
       $tasks[$i]['teamname'] = $team[0]['name'];
     }
+    $adminteams = DB::table('team')->where('useradminid',$userid)->get();
+    for($i = 0; $i < sizeof($adminteams); $i++){
+      $teams[] = $adminteams[$i];
+    }
     $hastasks = false;
     if(sizeof($tasks) > 0){
       $hastasks = true;
@@ -117,6 +113,10 @@
     for($i = 0; $i < sizeof($rel); $i++){
       $team = DB::table('team')->where('id',$rel[$i]['teamid'])->first();
       $teams[] = $team[0];
+    }
+    $adminteams = DB::table('team')->where('useradminid',$userid)->get();
+    for($i = 0; $i < sizeof($adminteams); $i++){
+      $teams[] = $adminteams[$i];
     }
     $usertasks = [];
     for($i = 0; $i < sizeof($tasks); $i++) {
@@ -178,18 +178,17 @@
   }
 
   
-  public function update($_,$prof_id = null) {
+  public function update($_,$task_id = null) {
     $name = Input::get('name');
-    $degree = Input::get('degree');
-    $email = Input::get('email');
-    $phone = Input::get('phone');
-    $prof = ['name'=>$name,'degree'=>$degree,
-             'email'=>$email,'phone'=>$phone];
-             DB::table('professor')->update($prof_id,$prof);
-             echo($prof_id);
-             return;
-             return redirect('/professor');
-             Professor::update($prof_id, $prof);
+    $description = Input::get('description');
+    $tag_id = Input::get('tagid');
+    $user_id = Input::get('userid');
+    $team_id = Input::get('teamid');
+    $task = ['name'=>$name,'description'=>$description,
+             'tagid'=>$tag_id,'userid'=>$user_id, 'teamid'=>$team_id];
+             DB::table('task')->update($task_id,$task);
+             return redirect('/team'.'/'.$team_id);
+             
              
     
   }
