@@ -6,6 +6,8 @@ require_once('./controllers/TeamController.php');
 require_once('./controllers/TagController.php');
 require_once('./controllers/TaskController.php');
 
+Route::get('/', 'LoginController@showLoginForm');
+
 //TEAM ROUTES
 Route::resource('team','TeamController');
 Route::get('/team/(:number)/delete', 'TeamController@destroy');
