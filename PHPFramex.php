@@ -1,5 +1,7 @@
 <?php
 
+cors();
+
 $sessions = [];
 $cookies = [];
 $redirect = null;
@@ -1117,4 +1119,39 @@ class View{
   }
 
 }
+?>
+
+
+<?php
+
+function cors() {
+  // Array de orígenes permitidos
+  $allowed_origins = [
+      'https://proyecto-2-josemolina-larissasegura.vercel.app',
+      'http://localhost:5173',  // Origen local para desarrollo
+      // Agrega otros orígenes permitidos según sea necesario
+  ];
+
+  // Obtener el origen de la solicitud
+  if (isset($_SERVER['HTTP_ORIGIN'])) {
+      $origin = $_SERVER['HTTP_ORIGIN'];
+      
+      // Verificar si el origen está en la lista de orígenes permitidos
+      if (in_array($origin, $allowed_origins)) {
+          header("Access-Control-Allow-Origin: $origin");
+          header('Access-Control-Allow-Credentials: true');
+          header('Access-Control-Expose-Headers: Set-Cookie');
+          header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
+          
+          // Access-Control headers que son recibidos durante peticiones tipo OPTIONS
+          if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
+              if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS'])) {
+                  header("Access-Control-Allow-Headers: {$_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS']}");
+              }
+              exit(0);
+          }
+      }
+  }
+}
+
 ?>

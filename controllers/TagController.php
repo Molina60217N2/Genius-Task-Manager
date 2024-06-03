@@ -5,47 +5,63 @@
   
   class TagController extends Controller {
     public function tagsperteam($teamid){
-      $tags = DB::table('tag')->where('teamid',$teamid)->get();
-      $hastags = false;
-      if(sizeof($tags) > 0) {
-        $hastags = true;
+      $response = [];
+      try {
+        $tags = DB::table('tag')->where('teamid',$teamid)->get();
+        // var_dump($tags);
+        // exit();
+        $response['code'] = '200';
+        $response['message'] = 'Query ejecutada exitosamente';
+        $response['data']['tags'] = $tags;
+      } catch(error $error) {
+        $response['code'] = '400';
+        $response['message'] = $error;
       }
-      return view(
-        'tag/index',
-        ['tags'=>$tags,
-        'hastags'=> $hastags,
-        'teamid'=>$teamid, 'login'=>Auth::check()]
-      );
+      
+      return $response;
     }
 
-    public function createTag($teamid) {
-      $team = DB::table('team')->where('id',$teamid)->first();
-      $teamname = $team[0]['name'];
-      $tags = DB::table('tag')->where('teamid',$teamid)->get();
-      $tag = ['name'=>'','color'=>'',
-               'teamid'=>''];
-    return view('tag/show',
-      ['title'=>'Tag Create',
-      'tag'=>$tag,
-      'tags'=>$tags,
-      'teamid'=>$teamid,
-      'teamname' => $teamname,
-      'show'=>false,'create'=>true,'edit'=>false]);
-  }
+  //   public function createTag($teamid) {
+  //     $team = DB::table('team')->where('id',$teamid)->first();
+  //     $teamname = $team[0]['name'];
+  //     $tags = DB::table('tag')->where('teamid',$teamid)->get();
+  //     $tag = ['name'=>'','color'=>'',
+  //              'teamid'=>''];
+  //   return view('tag/show',
+  //     ['title'=>'Tag Create',
+  //     'tag'=>$tag,
+  //     'tags'=>$tags,
+  //     'teamid'=>$teamid,
+  //     'teamname' => $teamname,
+  //     'show'=>false,'create'=>true,'edit'=>false]);
+  // }
 
-  public function store($smth = null) {
-    $name = Input::get('name');
-    $color = Input::get('color');
-    $teamid = Input::get('teamid');
+  public function addTag($request) {
+    $response = [];
+    // var_dump($request);
+    // exit();
+    $data = $request;
+    $name = $data['name'];
+    $color = $data['color'];
+    $teamid = $data['teamid'];
     $tag = ['name'=>$name,'color'=>$color,
              'teamid'=>$teamid];
-    DB::table('tag')->insert($tag);
-    
-    return redirect("/team" . "/" . $teamid);
+    try {
+      DB::table('tag')->insert($tag);
+      $response['code'] = '200';
+      $response['message'] = 'Query ejecutada exitosamente';
+    } catch(error $error) {
+      $response['code'] = '400';
+      $response['message'] = $error;
+    }   
+    return $response;
   }
-  public function destroy($prof_id) {  
-    DB::table('professor')->delete($prof_id);
-    return redirect('/professor');
+  public function destroy($tag_id) {  
+    DB::table('tag')->delete($tag_id);
+    $response = [];
+    $response['code'] = 200;
+    $response['message'] = 'Etiqueta eliminada';
+    return $response;
   }
 
   }
