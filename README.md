@@ -1,7 +1,4 @@
-# Proyecto 1 Genius Task Manager
-
-## 📕 Sitio Web
-[Web Genius Task Manager](https://geniustm.000webhostapp.com/)
+# Proyecto 3 Genius Task Manager Con VueJs, Prime Vue y Prime Flex
 
 ## 🚀 Herramienta Genius Task Manager: 
-[Genius Task Manager](https://geniustm.000webhostapp.com/)
+[Genius Task Manager](https://proyecto3-larissasegura-josemolina.000webhostapp.com/)

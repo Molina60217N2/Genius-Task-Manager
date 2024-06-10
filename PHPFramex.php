@@ -1100,7 +1100,6 @@ class Markdown {
 		return trim ($text);
 	}
 }
-
 ?><?php
 /**
  * View Facade
@@ -1119,16 +1118,12 @@ class View{
   }
 
 }
-?>
-
-
-<?php
-
+?><?php
 function cors() {
   // Array de orígenes permitidos
   $allowed_origins = [
       'https://proyecto-2-josemolina-larissasegura.vercel.app',
-      'http://localhost:5173',  // Origen local para desarrollo
+      'http://localhost:5173',// Origen local para desarrollo
       // Agrega otros orígenes permitidos según sea necesario
   ];
 
@@ -1153,5 +1148,4 @@ function cors() {
       }
   }
 }
-
 ?>

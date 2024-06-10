@@ -80,7 +80,7 @@
     $response = [];
     $userid = $user_id;
    try {
-    $user = DB::table('users')->where('id', $userid)->first();
+    $userS = DB::table('users')->where('id', $userid)->first();
     $tasks = DB::table('task')->where('userid', $userid)->get();
     $rel = DB::table('userteamrel')->where('userid',$userid)->get();
     $teams = [];
@@ -106,7 +106,7 @@
     $response['data']['tasks'] = $tasks;
     //retorna los equipos para hacer el selector del filtrado
     $response['data']['teams'] = $teams;
-    $response['data']['username'] = $username;
+    $response['data']['username'] = $userS[0]['name'];
     $response['message'] = 'Query ejectuada correctamente';
    } catch(error $error) {
     $response['code'] = '400';

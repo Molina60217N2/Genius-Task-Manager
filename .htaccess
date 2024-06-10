@@ -3,3 +3,13 @@ RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.*)$ index.php?$1 [QSA,L]
+
+## Enable SQLite
+php_value extension pdo_sqlite
+php_value extension sqlite3
+
+## Log errors to a logfile.
+php_flag log_errors on
+php_value error_log php_errors.log
+
+DirectoryIndex index.html index.php

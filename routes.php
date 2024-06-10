@@ -8,54 +8,54 @@ require_once('./controllers/TaskController.php');
 
 
 //Para el API mejor hace todo por get, total no está evaluando seguridad xd
-Route::get('/', 'LoginController@showLoginForm');
+Route::get('/api', 'LoginController@showLoginForm');
 
 //TEAM ROUTES
 // Route::resource('team','TeamController');
-Route::get('teams/(:number)', 'TeamController@teamsperuser');
-Route::get('team/(:number)/(:number)', 'TeamController@showTeam');
-Route::post('/team/delete', 'TeamController@deleteteam');
+Route::get('/api/teams/(:number)', 'TeamController@teamsperuser');
+Route::get('/api/team/(:number)/(:number)', 'TeamController@showTeam');
+Route::post('/api/team/delete', 'TeamController@deleteteam');
 //Esta funcion retorna a todos los usuarios. Debería hacer un controlador de usuarios? sí, pero no hay tiempo xd
-Route::get('/team/users','TeamController@getusers');
+Route::get('/api/team/users','TeamController@getusers');
 //Esta funcion es la que agrega el usuario como tal
-Route::post('/team/store/user', 'TeamController@storeuser');
-Route::post('/team/update', 'TeamController@updateTeam');
-Route::post('/team/create', 'TeamController@addTeam');
+Route::post('/api/team/store/user', 'TeamController@storeuser');
+Route::post('/api/team/update', 'TeamController@updateTeam');
+Route::post('/api/team/create', 'TeamController@addTeam');
 /**Formato del json: 
  * {"name":"nuevo team desde postman","description":"nuevo teampostman","useradmin":"4"}
  */
 //TAG ROUTES
 // Route::get('/team/(:number)/tag','TagController@index');
-Route::resource('tag','TagController');
-Route::get('/team/(:number)/tag','TagController@tagsperteam');
-Route::post('/team/tag/create','TagController@addTag');
-Route::get('/tag/(:number)/delete','TagController@destroy');
+Route::resource('/apitag','TagController');
+Route::get('/api/team/(:number)/tag','TagController@tagsperteam');
+Route::post('/api/team/tag/create','TagController@addTag');
+Route::get('/api/tag/(:number)/delete','TagController@destroy');
 
 //TASK ROUTES
-Route::resource('task', 'TaskController');
-Route::get('/team/(:number)/task','TaskController@tasksperteam');
+Route::resource('/apitask', 'TaskController');
+Route::get('/api/team/(:number)/task','TaskController@tasksperteam');
 //Como antes, esta retorna los usuarios y las etiquetas
-Route::get('/team/(:number)/task/create','TaskController@createTask');
+Route::get('/api/team/(:number)/task/create','TaskController@createTask');
 //Esta almacena las tareas
-Route::post('/team/store/task', 'TaskController@addTask');
-Route::post('/task/delete','TaskController@destroy');
-Route::post('/task/update', 'TaskController@updateTask');
-Route::get('/tasks/user/(:number)', 'TaskController@tasksperuser');
-Route::post('/task/filter','TaskController@filter');
+Route::post('/api/team/store/task', 'TaskController@addTask');
+Route::post('/api/task/delete','TaskController@destroy');
+Route::post('/api/task/update', 'TaskController@updateTask');
+Route::get('/api/tasks/user/(:number)', 'TaskController@tasksperuser');
+Route::post('/api/task/filter','TaskController@filter');
 
       // Authentication Routes  
 //     Route::get('login', 
 //     'LoginController@showLoginForm');
     Route::get('loginFails', 
     'LoginController@LoginFails');           
-    Route::post('/login', 
+    Route::post('/api/login', 
             'LoginController@login');  
     Route::get('logout', 'LoginController@logout');  
 
     // Registration Routes  
     Route::get('register', 
     'RegisterController@showRegistrationForm');  
-    Route::post('/register', 
+    Route::post('/api/register', 
             'RegisterController@register');
 
 

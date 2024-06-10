@@ -62,7 +62,7 @@
       //Debemos buscar los usuarios relacionados al equipo y pasar los nombres
       //Debemos buscar al usuario administrador del equipo y pasar su nombre
       $team = Team::find($id);
-      $user = DB::table('users')->where('id', $userid)->first();
+      $userS = DB::table('users')->where('id', $userid)->first();
       //Tener cuidado con mandar json a peticiones get porque se friega xd
       //Usuarios relacionados
       $users = [];
@@ -106,7 +106,7 @@
     $response['code'] = 200;
     $response['message'] = 'Query exitosa';
     //nombre del usuario actual
-    $response['data']['username'] = $user[0]['name'];
+    $response['data']['username'] = $userS[0]['name'];
     $response['data']['team'] = $team;
     $response['data']['users'] = $users;
     $response['data']['tasks'] = $tasks;
